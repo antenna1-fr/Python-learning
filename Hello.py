@@ -1,6 +1,8 @@
 
 # Variable Type and Classes, switching between them
+
 """height = 180.5
+# Start of session 7/6/2025
 Pre = "Your Height Is: "
 print(height)
 print(type(height))
@@ -247,7 +249,7 @@ last_name  = name[4:].lower()
 last_character = name[-1]
 print(first_name)
 print(last_name)
-"""
+
 # functions - code that's packaged nicely and can be called when needed
 def hello(name, age):
     print('Hi there ' + name + '!')
@@ -255,3 +257,281 @@ def hello(name, age):
 my_name = input('What is your name?: ')
 my_age = input('What is your age?: ')
 hello(my_name, my_age)
+
+# End of session 7/6/2025
+# Start of session 7/7/2025
+
+# Return statements - functions send python values or objects back to the caller
+
+def multiply(number1, number2):
+    return number1* number2
+print(multiply(20,31)) 
+
+# keyword arguments - areguments preceded by an identifier when we poass them to a function. not positional
+
+def hello(first, middle, last):
+    print('Hello ' + first + ' ' + middle + ' ' + last)
+hello('code','dude','bro')
+hello(last='code',first='bro',middle='dude')
+
+# nested function calls - functions calls inside other function calls. Innermost are resolved first.
+
+num = input('enter a whole positive number: ')
+num = float(num)
+num = abs(num)
+num = round(num)
+print(num)
+
+print(round(abs(float(input('enter a whole positive number: '))))) # Takes up less lines, but is less readable
+
+# variable scope - the region of a program where a variable is accessible. It is only available in the region its created in
+name = "Skib" # global scope, accessible anywhere in the file
+def display_name():
+    name = "Sig" # Defined in the scope of this function
+    print(name) # This will use the local variable if available. (Local, Encolsing, Global, Built-in)
+display_name()
+
+
+# *args = parameter that will pack all arguments into a tuple
+
+def multiply(number1, number2):
+    return number1* number2
+# print(multiply(20,31, 15)) # Will raise an error because it expects only 2 arguments
+def multiplymodular(*args):
+    total = 1 
+    for i in args:
+        total *= i
+    return total
+print(multiplymodular(20,31, 15))
+
+
+# **kwargs = parameter that will pack all arguments into a dictionary
+
+def hello(**kwargs):
+    print('Hello',end=' ')
+    for key, value in kwargs.items():
+        print(value, end = ' ')
+
+hello(asfg='Sir', ansd='Sig', asdhsdgnjvc='skib')
+
+# str.format() - optional method that gives users more control when displaying output
+
+animal = 'cow'
+item = 'moon'
+print('The ' +animal +  ' jumped over the ' + item)
+print('The {} jumped over the {}'.format(animal, item)) # Inserts the variables into the string positionally.
+print('The {0} jumped over the {1}'.format(item, animal)) # Inserts the variables into the string by index. Backwards in this case
+print('The {animal} jumped over the {item}'.format(animal='cow', item='moon')) # inserts the variables into the string by keyword
+
+text = "the {} jumped over the {}"
+print(text.format(animal, item)) # Inserts the variables into the string by positional arguments
+
+# str.format p2
+name = "Sigwerwerewsdf"
+
+print("Hello, my name is {}. Nice to meet you.".format(name))
+print("Hello, my name is {:10}. Nice to meet you.".format(name)) # 10 spaces wide, right aligned, to left align use <, center use ^
+
+#str.format p3
+
+number = 4.1453212
+number2 =  1200
+print('the number is {:.2f}'.format(number))
+print('the number is {:,}'.format(number2))
+print('the number is {:b}'.format(number2))
+print('the number is {:o}'.format(number2))
+print('the number is {:X}'.format(number2))
+print('the number is {:E}'.format(number2))
+
+# random module - used to generate "random" numbers
+import random 
+x = print(random.randint(1,6))
+y = random.random()
+
+List = ['rock', 'paper', 'scissors']
+z = random.choice(List)
+
+Cards = [1,2,3,4,5,6,7,8,9,'J','Q','K']
+random.shuffle(Cards)
+print(Cards)
+
+ #Exceptions
+try:
+    numerator = int(input("Enter a numerator: "))
+    denominator = int(input("Enter a denominator: "))
+    result = numerator / denominator
+except ZeroDivisionError as e:
+    print("You can't divide by zero! Klown!")
+    print(e)
+except ValueError as e:
+    print('only numbers skib')
+    print(e)
+except Exception as e:
+    print('something went wrong')
+    print(e)
+else:
+    print(result)
+finally:
+    print('this will always excecute')
+
+# Simple calculator (Ifs, arithmetic, try/except, string formatting)
+operator = input("Enter an operator (+, -, *, /): ")
+if operator not in ['+', '-', '*', '/']:
+    print("Invalid operator. Please enter one of +, -, *, /")
+    exit()
+try:
+    num1 = float(input("Enter first number: "))
+    num2 = float(input("Enter second number: "))
+except ValueError:
+    print('Enter a number')
+    exit()
+
+if operator == '+':
+    answer =  num1 + num2
+elif operator == '-':
+    answer = num1 - num2
+elif operator == '*':
+    answer = num1 * num2
+elif operator == '/':
+    if num2 != 0:
+        answer = num1 / num2
+    else:
+        answer = "Error: Division by zero"
+        exit()
+else:
+    pass
+
+try:
+    print(f"{num1}{operator}{num2} is {answer}")
+except NameError:
+    print("A value was not defined, please try again with valid numbers and operator")
+    exit()
+
+# Shopping cart (while loops, for loops, lists, dicts, tuples, functions)
+
+shopping_cart = []
+total_cost = 0.0
+
+while True:
+    item = input("Enter an item to add to your cart(q to quit): ")
+    if item.lower() == 'q':
+        break
+    try:
+        price = float(input(f"How much does {item} cost?"))
+    except ValueError:
+        print("Please enter a valid price.")
+        continue
+    shopping_cart.append((item, price))
+    total_cost += price
+    print(f"{item} added to your cart.")
+print("Your shopping cart:")
+shopping_cart.sort(key=lambda x: x[1])
+for item, price in shopping_cart:
+    print(f"{item:13}: ${price:.2f}")
+print(f"Total cost: ${total_cost:.2f}")
+
+# Kwargs and args practice
+def modularsum (*args):
+    sum = 0 
+    for i in args:
+        sum += i
+    return sum
+while True:
+    try:
+        numbers = input("Enter numbers to sum (separated by spaces, q to quit): ")
+        if numbers.lower() == 'q':
+            break
+        num_list = []
+        for num in numbers.split():
+            num_list.append(float(num))
+        print(f"The sum is: {modularsum(*num_list)}")
+        exit()
+    except ValueError:
+        print("Please enter valid numbers.")
+
+#OOP ***IMPORTANT***
+# Classes - blueprints for creating objects. Objects are instances of classes
+# Attributes -  what an object has, variables that belong to the class
+# Methods - What a class can do, functions that belong to the class
+
+# Example: Car racing sim with attributes and methods.
+# Takes inputs for a track, two cars and their specs, then simulates a race between them and crowns a winner.
+
+class Car:
+    def __init__(self, make, model, year, color, acceleration, top_speed, current_speed=0, track_completion=0):
+        self.make = make
+        self.model = model
+        self.year = year
+        self.color = color
+        self.acceleration = acceleration
+        self.top_speed = top_speed
+        self.current_speed = current_speed
+        self.track_completion = track_completion
+        
+    def test_drive(self):
+        print(f'This {self.year} {self.color} {self.make} {self.model} is test driving!')
+    def stop(self):
+        print(f'This {self.year} {self.color} {self.make} {self.model} has stopped!')
+    
+import time
+# Porsche = (Car('Porsche', '919 Tribute', 2018, 'white and red', 5, 369))
+# Audi = (Car('Audi', 'R18', 2016, 'black and white', 6, 330))
+class Racetrack:
+    def __init__(self, name, length, car_1, car_2):
+        self.name = name
+        self.length = length
+        self.car_1 = car_1
+        self.car_2 = car_2
+        self.winner = None
+    def race_start(self):
+        print(f'Racing {self.car_1.make} {self.car_1.model} and {self.car_2.make} {self.car_2.model} on {self.name} track!')
+        # Simulate
+        while self.car_1.track_completion < self.length and self.car_2.track_completion < self.length:
+            self.car_1.current_speed += self.car_1.acceleration
+            self.car_2.current_speed += self.car_2.acceleration
+            if self.car_1.current_speed > self.car_1.top_speed:
+                self.car_1.current_speed = self.car_1.top_speed
+            if self.car_2.current_speed > self.car_2.top_speed:
+                self.car_2.current_speed = self.car_2.top_speed
+            self.car_1.track_completion += self.car_1.current_speed * 0.1
+            self.car_2.track_completion += self.car_2.current_speed * 0.1
+            print(f'{self.car_1.make} {self.car_1.model} is at {self.car_1.track_completion} meters with speed {self.car_1.current_speed} km/h')
+            print(f'{self.car_2.make} {self.car_2.model} is at {self.car_2.track_completion} meters with speed {self.car_2.current_speed} km/h')
+            time.sleep(.1)
+        if self.car_1.track_completion >= self.length and self.car_2.track_completion >= self.length:
+            print("It's a tie!")
+        elif self.car_1.track_completion >= self.length:
+            winner = self.car_1
+        else:
+            winner = self.car_2
+        exit()
+    def win(self, winner):
+        print(f'The {self.winner.color}, {self.winner.year}, {self.winner.make} {self.winner.model} wins!!!')
+try:
+    track_name = str(input("Enter the racetrack name: "))
+    track_length = int(input("Enter the racetrack length in meters (default 2000): "))
+    Car1_make = input("Enter the first car make (default Porsche): ")
+    Car1_model = input("Enter the first car model (default 919 Tribute): ")
+    Car1_year = int(input("Enter the first car year (default 2018): "))
+    Car1_color = input("Enter the first car color (default white and red): ")
+    Car1_acceleration = int(input("Enter the first car acceleration (default 5): "))
+    Car1_top_speed = int(input("Enter the first car top speed (default 369): "))
+    Car2_make = input("Enter the second car make (default Porsche): ")
+    Car2_model = input("Enter the second car model (default 919 Tribute): ")
+    Car2_year = int(input("Enter the second car year (default 2016): "))
+    Car2_color = input("Enter the second car color (default white and red): ")
+    Car2_acceleration = int(input("Enter the second car acceleration (default 7): "))
+    Car2_top_speed = int(input("Enter the second car top speed (default 300): "))
+    racer1 = Car(Car1_make, Car1_model, Car1_year, Car1_color, 5, 369)
+    racer2 = Car(Car2_make, Car2_model, Car2_year, Car2_color, 6, 330)
+except ValueError as e:
+    print("Invalid input, using default values.")
+    racer1 = Car('Porsche', '919 Tribute', 2018, 'white and red', 5, 369)
+    racer2 = Car('Audi', 'R18', 2016, 'black and white', 6, 330)
+    track_name = "Laguna Seca"
+    track_length = 2000
+
+track = Racetrack(track_name, track_length, racer1, racer2)  # 2000 meters
+track.race_start()
+"""
+# End of session 7/7/2025
