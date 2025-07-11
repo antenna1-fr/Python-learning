@@ -533,5 +533,72 @@ except ValueError as e:
 
 track = Racetrack(track_name, track_length, racer1, racer2)  # 2000 meters
 track.race_start()
-"""
+
 # End of session 7/7/2025
+# Start of session 7/9/2025
+# Class variables
+class Car:
+    wheels = 4 #This is a default value. It applies by default to all instances of the object.
+    def __init__(self, color):
+        self.color = color # this is a variable for the instance of an item. Its value applies to that instance only 
+car1 = Car("White")
+car2 = Car("Black")
+car2.wheels = 2
+
+print(car1.wheels)
+print(car2.wheels)
+Car.wheels = 2 # Sets this for the whole class, all instances will use this as default from here on
+
+# Inheritance and multilevel inheritance
+class Organism: # Top level class
+    alive = True
+class Animal(Organism): # Derived from Organism, inherits alive
+    def eat(self):
+        print ('this animal is eating')
+    def sleep (self):
+        print('this animal is sleeping')
+class Rabbit(Animal): # Derived from Animal and Organism, inherits alive, eat, and sleep.
+    def run(self):
+        print('this rabbit is running')
+    pass
+class Fish(Animal):
+    def swim(self):
+        print('this fish is swimming')
+    pass
+class Hawk(Animal):
+    def fly(self):
+        print('this hawk is flying')
+    pass
+
+rabbit = Rabbit()
+fish = Fish()
+hawk = Hawk()
+print(rabbit.alive)
+hawk.sleep()
+rabbit.eat()
+hawk.fly()
+rabbit.run()
+fish.swim()
+
+# Multiple Inheritance
+
+class Prey:
+    def flee(self):
+        print('This animal flees')
+class Predator:
+    def hunt(self):
+        print("This animal hunts")
+class Rabbit(Prey):
+    pass
+class Hawk(Predator):
+    pass
+class Fish(Prey, Predator): # Inherits from both parent classes as opposed to only one
+    pass
+rabbit = Rabbit()
+hawk = Hawk()
+fish = Fish()
+rabbit.flee()
+hawk.hunt()
+fish.flee()
+fish.hunt()
+"""
