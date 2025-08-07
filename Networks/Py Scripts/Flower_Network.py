@@ -72,7 +72,7 @@ class Flowernet(nn.Module):
 model = Flowernet()
 
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.SGD(model.parameters(), lr=learning_rate)
+optimizer = optim.Adam(model.parameters(), lr=learning_rate, weight_decay=1e-4)
 
 last_avg = 0.0
 loss_array = []
