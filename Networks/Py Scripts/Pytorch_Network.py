@@ -3,8 +3,8 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import TensorDataset, DataLoader
 
-X = torch.tensor([[0,1],[1,0],[0,0],[1,1]], dtype=torch.float32)
-y = torch.tensor([[1],[1],[0],[0]], dtype=torch.float32)
+X = torch.tensor([[0,1],[1,0],[0,0],[1,1]], dtype=torch.float32, device='cuda')
+y = torch.tensor([[1],[1],[0],[0]], dtype=torch.float32, device='cuda')
 
 batch_size    = 2
 learning_rate = 0.1
@@ -28,7 +28,7 @@ class XORnet(nn.Module): # Creates a subclass of "nn.Module" named XORnet
     def forward(self,x): # forward pass definition
         return self.net(x)
     
-model = XORnet()
+model = XORnet().to('cuda')
 
 criterion = nn.BCELoss() # specifies loss function
 optimizer = optim.SGD(model.parameters(), lr=learning_rate) # the descent function to use for weight adjustments
