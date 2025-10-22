@@ -1,64 +1,60 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.utils.data import TensorDataset, DataLoader
 
-X = torch.tensor([[0,1],[1,0],[0,0],[1,1]], dtype=torch.float32, device='cuda')
-y = torch.tensor([[1],[1],[0],[0]], dtype=torch.float32, device='cuda')
+torch.manual_seed(1)
+torch.set_num_threads(1)
 
-batch_size    = 2
-learning_rate = 0.1
-total_epochs  = 10000
+# Data (vectorized full batch)
+X = torch.tensor([[0.,1.],
+                  [1.,0.],
+                  [0.,0.],
+                  [1.,1.]], dtype=torch.float32)
+y = torch.tensor([[1.],[1.],[0.],[0.]], dtype=torch.float32)
 
-dataset = TensorDataset(X,y)
-
-loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
-
-class XORnet(nn.Module): # Creates a subclass of "nn.Module" named XORnet
+class XORNet(nn.Module):
     def __init__(self):
-        super().__init__()  # Initializes the __init__ function of the parent class
-        self.net = nn.Sequential( # Defines the neuron structure
+        super().__init__()
+        self.net = nn.Sequential(
             nn.Linear(2,4),
             nn.ReLU(),
             nn.Linear(4,4),
             nn.ReLU(),
-            nn.Linear(4,1),
-            nn.Sigmoid()
+            nn.Linear(4,1)          # no Sigmoid here
         )
-    def forward(self,x): # forward pass definition
+    def forward(self,x):
         return self.net(x)
-    
-model = XORnet().to('cuda')
 
-criterion = nn.BCELoss() # specifies loss function
-optimizer = optim.SGD(model.parameters(), lr=learning_rate) # the descent function to use for weight adjustments
-last_avg = 1
+model = XORNet()
+criterion = nn.BCEWithLogitsLoss()   # combines Sigmoid + BCE
+optimizer = optim.SGD(model.parameters(), lr=0.1)
+
+total_epochs = 10000
+last_loss = float('inf')
 
 for epoch in range(1, total_epochs+1):
-    epoch_loss = 0.0
-    for xb, yb in loader:
-        optimizer.zero_grad()
-        preds = model(xb)           # forward pass
-        loss = criterion(preds, yb) # compute deviation from true labels
-        loss.backward()             # backpropagation
-        optimizer.step()            # update weights
-        epoch_loss += loss.item()   # accumulates loss
+    # (Optional) shuffle with a single index permutation, no DataLoader
+    idx = torch.randperm(X.size(0))
+    xb, yb = X[idx], y[idx]
+
+    optimizer.zero_grad(set_to_none=True)
+    logits = model(xb)            # single forward on full batch
+    loss = criterion(logits, yb)
+    loss.backward()
+    optimizer.step()
 
     if epoch % 1000 == 0:
-        avg = epoch_loss / len(loader)
-        if last_avg-avg <= 1e-4:    # Early stopping if loss is no longer improving
-            print(f"Early stopping at epoch{epoch:5d}")
+        curr = loss.detach().item()
+        print(f"Epoch {epoch:5d} — loss: {curr:.6f}")
+        if (last_loss - curr) <= 1e-4:
+            print(f"Early stopping at epoch {epoch}")
             break
-        print(f"Epoch {epoch:5d} — avg batch loss: {avg:.4f}")
-        last_avg = avg
+        last_loss = curr
 
 with torch.no_grad():
-    out = model(X)
-    preds = (out > 0.5).int().squeeze()
-    print("Final raw outputs:", out.squeeze().tolist())
+    logits = model(X)
+    probs  = torch.sigmoid(logits)
+    preds  = (probs > 0.5).int().squeeze()
+    print("Final raw outputs:", probs.squeeze().tolist())
     print("Final predictions:", preds.tolist())
     print("True predictions: ", y.squeeze().tolist())
-
-
-
-

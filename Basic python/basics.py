@@ -602,3 +602,5 @@ hawk.hunt()
 fish.flee()
 fish.hunt()
 """
+import math
+math.exp
