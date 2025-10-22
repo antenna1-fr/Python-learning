@@ -533,7 +533,6 @@ except ValueError as e:
 
 track = Racetrack(track_name, track_length, racer1, racer2)  # 2000 meters
 track.race_start()
-
 # End of session 7/7/2025
 # Start of session 7/9/2025
 # Class variables
