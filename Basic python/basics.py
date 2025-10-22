@@ -448,7 +448,7 @@ while True:
         exit()
     except ValueError:
         print("Please enter valid numbers.")
-
+"""
 #OOP ***IMPORTANT***
 # Classes - blueprints for creating objects. Objects are instances of classes
 # Attributes -  what an object has, variables that belong to the class
@@ -533,6 +533,7 @@ except ValueError as e:
 
 track = Racetrack(track_name, track_length, racer1, racer2)  # 2000 meters
 track.race_start()
+"""
 # End of session 7/7/2025
 # Start of session 7/9/2025
 # Class variables
