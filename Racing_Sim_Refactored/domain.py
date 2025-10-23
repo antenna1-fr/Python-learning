@@ -11,12 +11,21 @@ class Car:
     current_speed: float = 0
     track_completion: float = 0
 
-    def test_drive(self):
-        print(f'This {self.year} {self.color} {self.make} {self.model} is test driving!')
-    def stop(self):
-        print(f'This {self.year} {self.color} {self.make} {self.model} has stopped!')
+    def __post_init__(self):
+        if self.year < 1886:
+            raise ValueError("Year cannot be before cars were invented!")
+        if self.top_speed <= 0 or self.acceleration <= 0:
+            raise ValueError("No negative speed!")
+    
 
+
+
+@dataclass
 class Racetrack:
+    name: str = "Nurburgring"
+    length: int = 12000
+
+
     def __init__(self, name, length, car_1, car_2):
         self.name = name
         self.length = length
