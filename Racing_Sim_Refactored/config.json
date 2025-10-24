@@ -1,0 +1,17 @@
+{
+    "weather": "Sunny",
+    "laps": 4,
+    "seed": 42,
+    "car": {
+        "make": "Honda",
+        "model": "Civic Type R",
+        "year": 2021,
+        "color": "red",
+        "acceleration_start": 12.5,
+        "top_speed": 195
+    },
+    "racetrack": {
+        "name": "Monza",
+        "length": 5.8
+    }
+}
