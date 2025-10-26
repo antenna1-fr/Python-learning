@@ -1,0 +1,28 @@
+from pathlib import Path
+from config import load_config
+import argparse
+
+
+def main():
+    # Navigate to the root to allow easier path selection
+    root = Path(__file__).resolve().parents[2]
+
+    # Declare the parser
+    parser = argparse.ArgumentParser(description="Load and display configuration files")
+
+    # Add the config argument to the parserr
+    parser.add_argument('--config', type=Path, help='Path to the config file', default=root / 'config.json')
+
+    # Parse and use the path to gather the correct config
+    args = parser.parse_args()
+    config_path = root / args.config
+    cfg = load_config(config_path)
+
+    # Run the simulation with the correct path
+    from engine import race_start
+    race_start(cfg)
+
+if __name__ == "__main__":
+    main()
+
+
