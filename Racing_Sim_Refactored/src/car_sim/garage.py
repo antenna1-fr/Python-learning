@@ -12,6 +12,7 @@ class Car:
     top_speed: float = 180
     current_speed: float = 0
     track_completion: float = 0
+    current_distance: float = 0
 
     def __post_init__(self) -> None:
         if self.year < 1886:

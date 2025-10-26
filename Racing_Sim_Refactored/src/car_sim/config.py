@@ -10,7 +10,8 @@ class Config(BaseModel):
     laps: int = Field(gt=0, lt=16)
     seed: int = 42
 
-    car : Car
+    car1 : Car
+    car2 : Car
     racetrack: Racetrack
 
     model_config: ClassVar[ConfigDict] = {

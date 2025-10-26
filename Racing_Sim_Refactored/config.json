@@ -2,13 +2,23 @@
     "weather": "Sunny",
     "laps": 4,
     "seed": 42,
-    "car": {
+    "car1": {
         "make": "Honda",
         "model": "Civic Type R",
         "year": 2021,
         "color": "red",
         "acceleration_start": 12.5,
-        "top_speed": 195
+        "top_speed": 54,
+        "current_distance": 0
+    },
+    "car2": {
+        "make": "Subaru",
+        "model": "WRX STI",
+        "year": 2022,
+        "color": "blue",
+        "acceleration_start": 13.5,
+        "top_speed" : 50,
+        "current_distance": 0
     },
     "racetrack": {
         "name": "Monza",
