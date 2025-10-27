@@ -1,5 +1,5 @@
 from pathlib import Path
-from config import load_config
+from car_sim.config import load_config
 import argparse
 
 
@@ -19,7 +19,7 @@ def main():
     cfg = load_config(config_path)
 
     # Run the simulation with the correct path
-    from engine import race_start
+    from car_sim.engine import race_start
     race_start(cfg)
 
 if __name__ == "__main__":
