@@ -2,7 +2,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Literal, ClassVar
 from pydantic import BaseModel, ConfigDict, Field
-from garage import Car, Racetrack
+from .garage import Car, Racetrack
 
 
 class Config(BaseModel):
