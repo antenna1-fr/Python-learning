@@ -2,7 +2,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Literal, ClassVar
 from pydantic import BaseModel, ConfigDict, Field
-from .garage import Car, Racetrack
+from car_sim.garage import Car, Racetrack
 
 
 class Config(BaseModel):
@@ -14,7 +14,7 @@ class Config(BaseModel):
     car2 : Car
     racetrack: Racetrack
 
-    model_config: ClassVar[ConfigDict] = {
+    model_config = {
         "strict" : True,
         "extra": "forbid"         
     }
