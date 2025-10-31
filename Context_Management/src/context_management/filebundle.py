@@ -17,7 +17,6 @@ class FileBundle:
         self.paths = [Path(p) for p in paths]
         self.handles: List[TextIO] = []
 
-    @property
     def __enter__(self) -> list[TextIO]:
         try:
             for path in self.paths:
@@ -40,7 +39,3 @@ class FileBundle:
                 handle.close()
             except Exception:
                 pass
-
-
-
-

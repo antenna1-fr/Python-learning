@@ -16,7 +16,7 @@ def main():
 
     # Parse and use the path to gather the correct config
     args = parser.parse_args()
-    config_path = root / args.config
+    config_path = args.config if args.config.is_absolute() else (root / args.config)
     cfg = load_config(config_path)
 
     # Run the simulation with the correct path
