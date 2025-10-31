@@ -1,3 +1,4 @@
+
 from pathlib import Path
 from car_sim.config import load_config
 import argparse
@@ -10,7 +11,7 @@ def main():
     # Declare the parser
     parser = argparse.ArgumentParser(description="Load and display configuration files")
 
-    # Add the config argument to the parserr
+    # Add the config argument to the parser
     parser.add_argument('--config', type=Path, help='Path to the config file', default=root / 'config.json')
 
     # Parse and use the path to gather the correct config
