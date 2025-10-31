@@ -28,7 +28,7 @@ class FileBundle:
                 try:
                     handle.close()
                 except Exception:
-                    print(f"error closing {handle}")
+                    print(f'error opening file {handle}')
                     pass
             raise e
         return self.handles
