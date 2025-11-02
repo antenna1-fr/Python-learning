@@ -1,27 +1,25 @@
-from math import floor, ceil
+from context_management.progress import progress
+import itertools
 class Batcher:
-    def __init__(self, iterable=None, batch_size=1):
+    def __init__(self, iterable=None, batch_size=1, logging_period=2):
         self.iterable = iterable or []
         self.batch_size = batch_size
+        self.logging_period = logging_period
+        self.stream = None
+        self.batch_index = 0
         if batch_size < 1:
             raise ValueError("Batch size must be at least 1")
 
     def __iter__(self):
-        self.index = 0
+        self.stream = iter(self.iterable)
+        self.batch_index = 0
         return self
 
     def __next__(self):
-        if self.index >= len(self.iterable):
+        batch = list(itertools.islice(self.stream, self.batch_size))
+        if not batch:
             raise StopIteration
-        batch = self.iterable[self.index:self.index + self.batch_size]
-        self.index += self.batch_size
-        print(f"Batch {floor(self.index / self.batch_size)}/{ceil(len(self.iterable) / self.batch_size)}:")
+        self.batch_index += 1
+        if self.batch_index % self.logging_period == 0:
+            progress(self.batch_index*self.batch_size, None, self.batch_size)
         return batch
-
-batcher = Batcher()
-batcher.iterable = [1, 2, 3, 4, 5, 6, "hi", 10, True]
-batcher.batch_size = 3
-
-# Iterate through it and print each batch
-for sfa in batcher:
-    print(sfa)
