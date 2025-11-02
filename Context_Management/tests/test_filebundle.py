@@ -23,6 +23,8 @@ def test_normal_closes(tmp_path: Path):
         refs = list(handles)
     assert all(h.closed for h in refs)
 
+
+# noinspection PyUnreachableCode
 def test_exceptions(tmp_path: Path):
     c = write_file(tmp_path / "c.txt", "C")
     d = write_file(tmp_path / "d.txt", "D")
@@ -35,4 +37,25 @@ def test_exceptions(tmp_path: Path):
     assert all(h.closed for h in refs)
 
 
-# def test_open_error_closes(tmp_path: Path):
+def test_open_error_closes(tmp_path: Path):
+
+    e = write_file(tmp_path / "e.txt", "E")
+    f = write_file(tmp_path / "f.txt", "F")
+    missing = tmp_path / "missing.txt" # File is not created
+    earlier_handles = []
+
+    class PartialOpeningCapture(FileBundle):
+
+        def __enter__(self):
+            try:
+                super().__enter__()
+            finally:
+                earlier_handles.extend(self.handles)
+    with pytest.raises(Exception):
+        with PartialOpeningCapture([e, missing, f]):
+            pass
+    assert all(h.closed for h in earlier_handles)
+
+
+
+
