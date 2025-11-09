@@ -79,7 +79,7 @@
       <workItem from="1762026383610" duration="13378000" />
       <workItem from="1762102465639" duration="10049000" />
       <workItem from="1762230493302" duration="1487000" />
-      <workItem from="1762659743966" duration="5943000" />
+      <workItem from="1762659743966" duration="7986000" />
     </task>
     <servers />
   </component>
@@ -102,7 +102,7 @@
     <SUITE FILE_PATH="coverage/Context_Management$csv_writer.coverage" NAME="csv_writer Coverage Results" MODIFIED="1762113188825" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/benchmarks" />
     <SUITE FILE_PATH="coverage/Context_Management$conftest.coverage" NAME="conftest Coverage Results" MODIFIED="1762112290363" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/Context_Management$batcher.coverage" NAME="batcher Coverage Results" MODIFIED="1762114414370" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/context_management" />
-    <SUITE FILE_PATH="coverage/Context_Management$streaming_vs_static.coverage" NAME="streaming_vs_static Coverage Results" MODIFIED="1762667249386" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/benchmarks" />
+    <SUITE FILE_PATH="coverage/Context_Management$streaming_vs_static.coverage" NAME="streaming_vs_static Coverage Results" MODIFIED="1762667955864" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/benchmarks" />
     <SUITE FILE_PATH="coverage/Context_Management$test_filebundle.coverage" NAME="test_filebundle Coverage Results" MODIFIED="1762026482456" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
   </component>
 </project>

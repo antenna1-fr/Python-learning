@@ -9,3 +9,7 @@
     # It is also benchmarked in memory and speed versus naive full-object loading
 # The goal of this repository is to be a proving ground for my own implementations of maintainable, scalable IO
     # It will be usable entirely from the CL. Commands and documentation will be added here when the project is completed
+# Usage:
+    # To use, import the Batcher or Filebundles classes and use them as the documentation for each shows
+    # Experiment with different batch sizes and csv sizes in the streaming_vs_static.py file
+

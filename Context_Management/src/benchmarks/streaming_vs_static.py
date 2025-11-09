@@ -19,8 +19,7 @@ def process_row(row):
         row[0] = float(row[0])+1
         row[1] = float(row[1])*2.5
         row[2] = float(row[2])/15
-    except (ValueError, TypeError) as e:
-        print(e)
+    except (ValueError, TypeError):
         pass
 
 def run_batcher(csv_paths):
@@ -90,11 +89,13 @@ def main ():
     if (results[0]["rows"] != results[1]["rows"]
             or results[0]["temp_sum"] != results[1]["temp_sum"]
             or results[0]["precip_sum"] != results[1]["precip_sum"]):
-        Exception("Batcher and static results do not match")
+        raise (
+            Exception("Batcher and static results do not match"))
     for r in results:
         print(
             f"{r['mode']:>12}: rows={r['rows']:,} "
             f"time={r['time_s']:.3f}s peak_mem={r['peak_mb']:.2f} MiB "
         )
+    print(f"Memory advantage: {results[1]['peak_mb']/results[0]['peak_mb']:.1%}")
 if __name__ == "__main__":
     main()
