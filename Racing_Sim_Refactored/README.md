@@ -4,3 +4,15 @@
 
 # The code has been modularized, so the relevant classes live in separate files from one another and from the execution code
 # use run-sim and config_tester to run and test config files. Both support the --config flag.
+
+# Dev install
+pip install -e .
+
+# CLI help
+car-sim --help
+car-sim run --help
+car-sim version
+
+# Example
+car-sim run --config config.json --verbose
+# Logs: reports/run.log (key=value lines with run_id)

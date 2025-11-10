@@ -3,19 +3,8 @@ from pathlib import Path
 from car_sim.garage import Car, Racetrack
 import time
 
-#* Code for running as a script, not CLI
-# Navigate to the root to allow easier path selection
-current_path = Path(__file__)
-root: Path = current_path.parent.parent.parent
-# Choose the correct path for the configurations
-config_path: Path = root / "config.json"
-
-# Get the config from config.json
-cfg: Config = load_config(Path(config_path))
-
-
-def main():
-    race_start(cfg)
+import logging
+log = logging.getLogger(__name__)
 
 
 #* Main function definitions
@@ -30,10 +19,10 @@ def race_step(car: Car, racetrack: Racetrack) -> None:
     car.current_distance += car.current_speed
     # Track completion
     car.track_completion = (car.current_distance / (racetrack.length * 1000))
-    print(f"{car.make} {car.model} {car.year} is at {car.track_completion * 100:.2f} % track completion")
+    log.debug("step", extra={"car": f"{car.make} {car.model}", "completion": car.track_completion, "speed": car.current_speed})
 
 
-def check_winner(car1, car2) -> Car:
+def check_winner(car1, car2, cfg) -> tuple[Car,Car] | Car:
     if (car1.track_completion > cfg.laps) and (car2.track_completion > cfg.laps):
         return car1, car2
     elif car1.track_completion * cfg.laps > cfg.laps:
@@ -45,26 +34,25 @@ def check_winner(car1, car2) -> Car:
 def display_results(*args) -> None:
     if len(args) == 2:
         print(
-            f'The {args[0].year} {args[0].make} {args[0].model} tied with the {args[0].year} {args[1].make} {args[1].model}')
+            log.info("tie"),
+            f'The {args[0].year} {args[0].make} {args[0].model} tied with the {args[1].year} {args[1].make} {args[1].model}')
     else:
-        print(f'The winner is the {args[0].year} {args[0].make} {args[0].model}')
+        log.info("winner", extra={"winner": f"{args[0].year} {args[0].make} {args[0].model}"})
 
 
 # def start_race(Car1, Car2, Racetrack):
-def race_start(config):
-    car1: Car = config.car1
-    car2: Car = config.car2
-    track: Racetrack = config.racetrack
-    print('Race starting!')
+def race_start(cfg: Config):
+    car1: Car = cfg.car1
+    car2: Car = cfg.car2
+    track: Racetrack = cfg.racetrack
+    log.info("race_start", extra={"track": track.name, "laps": cfg.laps})
 
-    while (car1.track_completion < config.laps) and (car2.track_completion < config.laps):
+    while (car1.track_completion < cfg.laps) and (car2.track_completion < cfg.laps):
         race_step(car1, track)
         race_step(car2, track)
         time.sleep(0.01)
-    print('Race ending!')
-    winners = check_winner(car1, car2)
+    log.info("race_end", extra={"track": track.name, "laps": cfg.laps})
+    winners = check_winner(car1, car2, cfg)
     display_results(winners)
+    return winners
 
-
-if __name__ == "__main__":
-    main()
