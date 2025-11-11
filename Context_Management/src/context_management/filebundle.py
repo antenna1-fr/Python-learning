@@ -5,7 +5,7 @@ from typing import Union, List, TextIO
 class FileBundle:
     """
     FileBundle (Paths)
-
+`
     Usage:
     with FileBundle(["a.txt", "b.txt"]) as files:
         data_a = files[0].read()
