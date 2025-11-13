@@ -10,14 +10,12 @@ class Config(BaseModel):
     laps: int = Field(gt=0, lt=16)
     seed: int = 42
 
-    car1 : Car
-    car2 : Car
+    car1: Car
+    car2: Car
     racetrack: Racetrack
 
-    model_config = {
-        "strict" : True,
-        "extra": "forbid"         
-    }
+    model_config = {"strict": True, "extra": "forbid"}
+
 
 def load_config(path: Path) -> Config:
     return Config.model_validate_json(path.read_text())
