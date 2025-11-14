@@ -2,16 +2,20 @@ import logging
 import logging.config
 from typing import Dict
 
+
 class SafeFormatter(logging.Formatter):
     """Formatter that fills in missing attributes with defaults."""
+
     def format(self, record: logging.LogRecord) -> str:
         # ensure run_id exists
         if not hasattr(record, "run_id"):
             record.run_id = "-"
         return super().format(record)
 
+
 class KeyValueFormatter(logging.Formatter):
     """Formats standard fields and then any extra attributes as key=value."""
+
     def format(self, record):
         # Base fields
         base = (
@@ -19,7 +23,7 @@ class KeyValueFormatter(logging.Formatter):
             f"level={record.levelname} "
             f"run_id={getattr(record, 'run_id', '-')} "
             f"module={record.name} "
-            f"msg=\"{record.getMessage()}\""
+            f'msg="{record.getMessage()}"'
         )
 
         # Add any extra attributes that aren't standard LogRecord fields
@@ -27,7 +31,7 @@ class KeyValueFormatter(logging.Formatter):
         extras = {
             k: v
             for k, v in record.__dict__.items()
-            if k not in standard and k not in {"asctime", "message"}
+            if k not in standard and k not in {"asctime", "message", "run_id"}
         }
         if extras:
             extras_str = " " + " ".join(f"{k}={v!r}" for k, v in extras.items())
@@ -47,6 +51,7 @@ class ContextFilter:
                 setattr(record, k, v)
         return True
 
+
 def configure_logging(log_path: str, console_level: str, **context):
     config = build_logging_config(log_path, console_level)
     logging.config.dictConfig(config)
@@ -57,6 +62,7 @@ def configure_logging(log_path: str, console_level: str, **context):
     root.addFilter(f)
     for h in root.handlers:
         h.addFilter(f)
+
 
 def build_logging_config(log_path: str, console_level: str) -> Dict:
     return {

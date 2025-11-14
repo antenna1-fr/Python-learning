@@ -14,15 +14,31 @@ from car_sim.errors import ConfigError, SimError
 app = typer.Typer(add_completion=False, no_args_is_help=True)
 __version__ = "0.1.0"
 
+
 def _resolve(path: Path) -> Path:
     return path if path.is_absolute() else (Path(__file__).resolve().parents[2] / path)
 
+
 @app.command(help="Run the racing simulation.")
 def run(
-    config: Path = typer.Option(Path("config.json"), "--config", "-c", exists=False, dir_okay=False, readable=True, help="Path to config JSON."),
+    config: Path = typer.Option(
+        Path("config.json"),
+        "--config",
+        "-c",
+        exists=False,
+        dir_okay=False,
+        readable=True,
+        help="Path to config JSON.",
+    ),
     seed: int = typer.Option(None, "--seed", help="Override random seed in config."),
-    verbose: bool = typer.Option(False, "--verbose", "-v", help="Enable DEBUG console logging."),
-    log_file: Path = typer.Option(Path("reports/run.log"), "--log-file", help="Log file path (created if missing)."),
+    verbose: bool = typer.Option(
+        False, "--verbose", "-v", help="Enable DEBUG console logging."
+    ),
+    log_file: Path = typer.Option(
+        Path("reports/run.log"),
+        "--log-file",
+        help="Log file path (created if missing).",
+    ),
 ):
     run_id = uuid.uuid4().hex[:8]
     log_path = _resolve(log_file)
@@ -47,7 +63,9 @@ def run(
         race_start(cfg)
 
     except ValidationError as e:
-        logging.getLogger(__name__).error("invalid_config", extra={"detail": str(e).splitlines()[0]})
+        logging.getLogger(__name__).error(
+            "invalid_config", extra={"detail": str(e).splitlines()[0]}
+        )
         raise typer.Exit(code=ConfigError.exit_code)
     except ConfigError as e:
         logging.getLogger(__name__).error("config_error", extra={"detail": str(e)})
@@ -60,7 +78,7 @@ def run(
         logging.getLogger(__name__).exception("unhandled_exception")
         raise typer.Exit(code=1)
 
+
 @app.command(help="Show version and exit.")
 def version():
     typer.echo(__version__)
-

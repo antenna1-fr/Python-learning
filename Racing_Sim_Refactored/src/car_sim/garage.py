@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 import time
 
+
 # Datalasses
 @dataclass
 class Car:
@@ -23,9 +24,6 @@ class Car:
             raise ValueError("Speed cannot be above 500 kph")
         if self.acceleration_start > 30:
             raise ValueError("Acceleration cannot exceed 3 forward Gs")
-        
-    
-
 
 
 @dataclass
@@ -36,4 +34,3 @@ class Racetrack:
     def __post_init__(self) -> None:
         if self.length > 25:
             raise ValueError("Track length cannot exceed 25 km")
-    
