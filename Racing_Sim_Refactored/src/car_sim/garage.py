@@ -7,7 +7,7 @@ class Car:
     make: str = "Default Make"
     model: str = "Default Model"
     year: int = 1886
-    color: str = "Black"
+    color: str = "Default Color"
     acceleration_start: float = 7.5
     top_speed: float = 180
     current_speed: float = 0
